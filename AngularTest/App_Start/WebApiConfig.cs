@@ -22,6 +22,8 @@ namespace AngularTest
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
