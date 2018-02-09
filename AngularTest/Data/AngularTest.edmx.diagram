@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="59922559a20840b497c15c6e94fa4c5e" Name="Diagram1">
+        <EntityTypeShape EntityType="AngularTestModel.Facility" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="AngularTestModel.LabOrder" Width="1.5" PointX="8.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AngularTestModel.LabTest" Width="1.5" PointX="8.5" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="AngularTestModel.Patient" Width="1.5" PointX="13.625" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="AngularTestModel.FK_LabOrder_Facility" ManuallyRouted="false" />
+        <AssociationConnector Association="AngularTestModel.FK_LabOrder_LabTest" ManuallyRouted="false" />
+        <AssociationConnector Association="AngularTestModel.FK_LabOrder_Patient" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

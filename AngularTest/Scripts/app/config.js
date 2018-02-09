@@ -16,6 +16,11 @@
                 url: '/main',
                 templateUrl: '/scripts/app/views/main.html',
                 controller: 'mainController'
+            }).state('details',
+            {
+                url: '/detail/:id',
+                templateUrl: '/scripts/app/directives/templates/lab-order-detail-view-control.html',
+                controller: 'labOrderDetailController'
             });
     }
 ]);

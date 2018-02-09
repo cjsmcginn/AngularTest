@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AngularTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacilityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LabOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LabTestId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="FacilityId" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AmountBilled" Type="money" Nullable="false" />
+          <Property Name="AmountCollected" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LabTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LabTestName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LabTestCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_LabOrder_Facility">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+          <End Role="LabOrder" Type="Self.LabOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LabOrder">
+              <PropertyRef Name="FacilityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabOrder_LabTest">
+          <End Role="LabTest" Type="Self.LabTest" Multiplicity="1" />
+          <End Role="LabOrder" Type="Self.LabOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LabOrder">
+              <PropertyRef Name="LabTestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabOrder_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="LabOrder" Type="Self.LabOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LabOrder">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AngularTestModelStoreContainer">
+          <EntitySet Name="Facility" EntityType="Self.Facility" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LabOrder" EntityType="Self.LabOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LabTest" EntityType="Self.LabTest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LabOrder_Facility" Association="Self.FK_LabOrder_Facility">
+            <End Role="Facility" EntitySet="Facility" />
+            <End Role="LabOrder" EntitySet="LabOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabOrder_LabTest" Association="Self.FK_LabOrder_LabTest">
+            <End Role="LabTest" EntitySet="LabTest" />
+            <End Role="LabOrder" EntitySet="LabOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabOrder_Patient" Association="Self.FK_LabOrder_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="LabOrder" EntitySet="LabOrder" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AngularTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacilityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LabOrders" Relationship="Self.FK_LabOrder_Facility" FromRole="Facility" ToRole="LabOrder" />
+        </EntityType>
+        <EntityType Name="LabOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabTestId" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="FacilityId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AmountBilled" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="AmountCollected" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK_LabOrder_Facility" FromRole="LabOrder" ToRole="Facility" />
+          <NavigationProperty Name="LabTest" Relationship="Self.FK_LabOrder_LabTest" FromRole="LabOrder" ToRole="LabTest" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK_LabOrder_Patient" FromRole="LabOrder" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="LabTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabTestName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LabTestCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LabOrders" Relationship="Self.FK_LabOrder_LabTest" FromRole="LabTest" ToRole="LabOrder" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="LabOrders" Relationship="Self.FK_LabOrder_Patient" FromRole="Patient" ToRole="LabOrder" />
+        </EntityType>
+        <Association Name="FK_LabOrder_Facility">
+          <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+          <End Role="LabOrder" Type="Self.LabOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facility">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LabOrder">
+              <PropertyRef Name="FacilityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabOrder_LabTest">
+          <End Role="LabTest" Type="Self.LabTest" Multiplicity="1" />
+          <End Role="LabOrder" Type="Self.LabOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabTest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LabOrder">
+              <PropertyRef Name="LabTestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabOrder_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="LabOrder" Type="Self.LabOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LabOrder">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AngularTestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Facilities" EntityType="Self.Facility" />
+          <EntitySet Name="LabOrders" EntityType="Self.LabOrder" />
+          <EntitySet Name="LabTests" EntityType="Self.LabTest" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <AssociationSet Name="FK_LabOrder_Facility" Association="Self.FK_LabOrder_Facility">
+            <End Role="Facility" EntitySet="Facilities" />
+            <End Role="LabOrder" EntitySet="LabOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabOrder_LabTest" Association="Self.FK_LabOrder_LabTest">
+            <End Role="LabTest" EntitySet="LabTests" />
+            <End Role="LabOrder" EntitySet="LabOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabOrder_Patient" Association="Self.FK_LabOrder_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="LabOrder" EntitySet="LabOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AngularTestModelStoreContainer" CdmEntityContainer="AngularTestEntities">
+          <EntitySetMapping Name="Facilities">
+            <EntityTypeMapping TypeName="AngularTestModel.Facility">
+              <MappingFragment StoreEntitySet="Facility">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LabOrders">
+            <EntityTypeMapping TypeName="AngularTestModel.LabOrder">
+              <MappingFragment StoreEntitySet="LabOrder">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LabTestId" ColumnName="LabTestId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="FacilityId" ColumnName="FacilityId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="AmountBilled" ColumnName="AmountBilled" />
+                <ScalarProperty Name="AmountCollected" ColumnName="AmountCollected" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LabTests">
+            <EntityTypeMapping TypeName="AngularTestModel.LabTest">
+              <MappingFragment StoreEntitySet="LabTest">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LabTestName" ColumnName="LabTestName" />
+                <ScalarProperty Name="LabTestCode" ColumnName="LabTestCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="AngularTestModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
