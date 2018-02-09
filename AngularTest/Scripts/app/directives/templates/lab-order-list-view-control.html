@@ -1,7 +1,7 @@
 ﻿<md-content>
     <md-list>
         <md-subheader>Lab Orders</md-subheader>
-        <md-list-item ng-repeat="labOrder in labOrders" ng-click="null">
+        <md-list-item ng-repeat="labOrder in labOrders" ng-click="showLabOrderDetails(labOrder.id)">
             <div  layout="column">
                 <h3>{{ labOrder.orderDateDisplay }}: {{ labOrder.labTestName }}</h3>
                 <span>Billed: ${{labOrder.amountBilled}}</span>

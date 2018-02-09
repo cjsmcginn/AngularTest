@@ -1,0 +1,25 @@
+﻿<md-content layout-padding>
+    <form name="detailsForm" ng-submit="saveLabOrderDetails()">
+        <div layout-gt-xs="row">
+            <h3>Lab Order #{{labOrderDetails.id}} {{labOrderDetails.orderDate | date:'shortDate'}}</h3>
+        </div>
+        <div layout-gt-xs="row">
+            <label>Lab Test: </label> {{labOrderDetails.labTestName}}
+        </div>
+        <div layout-gt-xs="row">
+                <label>Patient Name: </label> {{labOrderDetails.patientLastName}}, {{labOrderDetails.patientFirstName}}
+        </div>
+        <div layout-gt-xs="row">
+                <label>Facility Name: </label> {{labOrderDetails.facilityName}}
+        </div>
+        <div layout-gt-xs="row">
+            <md-input-container>
+                <label>Amount Collected</label>
+                <input ng-model="labOrderDetails.amountCollected" ng-value="labOrderDetails.amountCollected"/>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row">
+            <md-button type="submit" class="md-raised">SAVE</md-button>
+        </div>
+    </form>
+</md-content>
